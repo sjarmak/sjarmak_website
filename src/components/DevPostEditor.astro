@@ -1,0 +1,86 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+{isDev && (
+  <div class="container mx-auto px-4 max-w-3xl mt-8 border rounded-md bg-card text-card-foreground">
+    <div class="flex items-center justify-between p-3 border-b border-border">
+      <span class="text-sm text-muted-foreground">Dev Editor (local only)</span>
+      <button id="toggle-dev-editor" class="text-sm px-3 py-1 rounded border border-border hover:bg-accent transition-colors">
+        Toggle Editor
+      </button>
+    </div>
+    <div id="dev-editor-panel" class="p-3 space-y-3 hidden">
+      <textarea 
+        id="dev-editor-textarea" 
+        class="w-full h-64 p-2 font-mono text-sm bg-background text-foreground border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
+        placeholder="Loading..."
+      ></textarea>
+      <div class="flex items-center gap-3">
+        <button 
+          id="dev-editor-save" 
+          class="px-3 py-1 rounded bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+        >
+          Save
+        </button>
+        <span id="dev-editor-status" class="text-sm text-muted-foreground"></span>
+      </div>
+      <p class="text-xs text-muted-foreground">
+        Note: writes to src/content/blog/{slug}.md. HMR will refresh the page after save.
+      </p>
+    </div>
+  </div>
+
+  <script define:vars={{ slug }}>
+    const toggle = document.getElementById('toggle-dev-editor');
+    const panel = document.getElementById('dev-editor-panel');
+    const area = document.getElementById('dev-editor-textarea');
+    const save = document.getElementById('dev-editor-save');
+    const status = document.getElementById('dev-editor-status');
+
+    toggle?.addEventListener('click', async () => {
+      panel?.classList.toggle('hidden');
+      if (!panel?.classList.contains('hidden') && area && !area.value) {
+        try {
+          const res = await fetch(`/api/dev/blog/${encodeURIComponent(slug)}`);
+          if (res.ok) {
+            area.value = await res.text();
+          } else {
+            area.value = `---\ntitle: ${slug}\ndate: ${new Date().toISOString().slice(0, 10)}\ndraft: true\nauthor: sjarmak\n---\n\nWrite your blog post here...\n`;
+          }
+        } catch (e) {
+          console.error('Failed to load content:', e);
+          area.value = 'Error loading content';
+        }
+      }
+    });
+
+    save?.addEventListener('click', async () => {
+      if (!status || !area) return;
+      
+      status.textContent = 'Saving...';
+      try {
+        const res = await fetch(`/api/dev/blog/${encodeURIComponent(slug)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: area.value,
+        });
+        status.textContent = res.ok ? 'Saved ✔' : 'Save failed ✗';
+        
+        if (res.ok) {
+          setTimeout(() => {
+            status.textContent = '';
+          }, 3000);
+        }
+      } catch (e) {
+        console.error('Save failed:', e);
+        status.textContent = 'Save failed ✗';
+      }
+    });
+  </script>
+)}

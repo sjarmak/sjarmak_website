@@ -1,4 +1,6 @@
 ---
+import '../styles/globals.css';
+
 export interface Props {
   title: string;
   description: string;
@@ -8,7 +10,7 @@ const { title, description } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" value={description} />
@@ -16,30 +18,27 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <style>
-      .navbar { background-color: #333; color: white; padding: 1rem; }
-      .navbar a { color: white; margin-right: 1rem; text-decoration: none; }
-      .dropdown { position: relative; display: inline-block; }
-      .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
-      .dropdown:hover .dropdown-content { display: block; }
-      .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; }
-    </style>
   </head>
-  <body class="bg-white text-gray-900">
-    <nav class="navbar">
-      <a href="/">sjarmak projects</a>
-      <a href="/">Home</a>
-      <div class="dropdown">
-        <a href="#">Projects</a>
-        <div class="dropdown-content">
-          <a href="/projects">Project Descriptions</a>
-          <hr>
-          <a href="https://search.sjarmak.ai">Search Comparisons</a>
-          <a href="https://brokenlinks.sjarmak.ai">Broken ADS Link Metadata</a>
-          <a href="https://github.com/adsabs/entity_extractor">Entity Extractor</a>
+  <body>
+    <nav class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center gap-6">
+            <a href="/" class="text-lg font-semibold text-foreground hover:text-primary transition-colors">
+              sjarmak
+            </a>
+            <div class="hidden md:flex items-center gap-6">
+              <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                Home
+              </a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                Blog
+              </a>
+            </div>
+          </div>
+
         </div>
-        </div>
-        <input type="text" placeholder="Search" style="float: right; padding: 6px; margin-top: -6px;">
+      </div>
     </nav>
     <slot />
   </body>

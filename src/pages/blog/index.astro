@@ -1,57 +1,48 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { siteConfig } from '../../consts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../../components/ui/card';
 
-const posts = [
-	{
- slug: 'building-with-nextjs',
-		data: {
-			title: 'Building Static Sites with Next.js',
-			description: 'Exploring the power of static site generation with Next.js App Router',
-			date: '2025-10-16',
-			tags: ['next-js', 'react', 'web-development']
-		}
-	},
-	{
-		slug: 'welcome',
-		data: {
-			title: 'Welcome to My Blog',
-			description: 'An introduction to this blog and what you can expect from future posts',
-			date: '2025-10-15',
-			tags: ['meta', 'introduction']
-		}
-	}
-];
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
-const title = `Blog - ${siteConfig.name}`;
-const description = `Read the latest blog posts from ${siteConfig.author.name}`;
+const title = "Blog — Stephanie Jarmak";
+const description = "Writing on information science and digital library projects";
 ---
 
 <BaseLayout title={title} description={description}>
-	<section>
- <h1 class="text-4xl font-bold mb-8">Blog</h1>
-<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
- {posts.map((post) => (
- <article class="border rounded-lg p-6 hover:shadow-md transition-shadow">
- <a href={`/blog/${post.slug}`}>
-   <h2 class="text-2xl font-bold mb-2 hover:text-blue-600 transition-colors">
-    {post.data.title}
-  </h2>
- </a>
- <p class="text-gray-600 text-sm mb-3">
-  <FormattedDate date={new Date(post.data.date)} />
- </p>
- <p class="text-gray-700 mb-4">{post.data.description}</p>
-  <div class="flex flex-wrap gap-2">
-   {post.data.tags.map((tag) => (
-   <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm">
-     {tag}
-    </span>
-  ))}
- </div>
- </article>
-))}
-</div>
-</section>
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4 text-foreground">Blog</h1>
+      <p class="text-xl text-muted-foreground">
+        Writing about information science and digital library projects.
+      </p>
+    </div>
+
+    <section class="mb-12 space-y-6">
+      {posts.map((post) => (
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <a href={`/blog/${post.slug}`} class="hover:text-primary transition-colors">
+                {post.data.title}
+              </a>
+            </CardTitle>
+            <CardDescription>
+              Posted by {post.data.author} on <FormattedDate date={new Date(post.data.date)} />
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {post.data.description && (
+              <p class="text-muted-foreground mb-4">{post.data.description}</p>
+            )}
+            <a href={`/blog/${post.slug}`} class="text-primary hover:underline font-medium">
+              Read More →
+            </a>
+          </CardContent>
+        </Card>
+      ))}
+    </section>
+  </div>
 </BaseLayout>

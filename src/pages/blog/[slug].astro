@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import DevPostEditor from '../../components/DevPostEditor.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, description, date, author } = post.data;
+---
+
+<BaseLayout title={title} description={description ?? ''}>
+  <article class="container mx-auto px-4 py-8 max-w-3xl">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-foreground mb-3">{title}</h1>
+      <p class="text-sm text-muted-foreground">
+        Posted by {author} on <FormattedDate date={new Date(date)} />
+      </p>
+    </header>
+    
+    <div class="prose prose-invert prose-lg max-w-none
+      prose-headings:text-foreground 
+      prose-p:text-foreground 
+      prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-foreground
+      prose-code:text-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+      prose-pre:bg-muted prose-pre:text-foreground
+      prose-ul:text-foreground prose-ol:text-foreground
+      prose-li:text-foreground">
+      <Content />
+    </div>
+  </article>
+
+  <DevPostEditor slug={post.slug} />
+</BaseLayout>
