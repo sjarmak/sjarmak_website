@@ -1,0 +1,46 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" value={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style>
+      .navbar { background-color: #333; color: white; padding: 1rem; }
+      .navbar a { color: white; margin-right: 1rem; text-decoration: none; }
+      .dropdown { position: relative; display: inline-block; }
+      .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
+      .dropdown:hover .dropdown-content { display: block; }
+      .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; }
+    </style>
+  </head>
+  <body class="bg-white text-gray-900">
+    <nav class="navbar">
+      <a href="/">sjarmak projects</a>
+      <a href="/">Home</a>
+      <div class="dropdown">
+        <a href="#">Projects</a>
+        <div class="dropdown-content">
+          <a href="/projects">Project Descriptions</a>
+          <hr>
+          <a href="https://search.sjarmak.ai">Search Comparisons</a>
+          <a href="https://brokenlinks.sjarmak.ai">Broken ADS Link Metadata</a>
+          <a href="https://github.com/adsabs/entity_extractor">Entity Extractor</a>
+        </div>
+        </div>
+        <input type="text" placeholder="Search" style="float: right; padding: 6px; margin-top: -6px;">
+    </nav>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,85 @@
+---
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+---
+
+<BlogPostLayout
+	title="Building Static Sites with Next.js"
+	description="Exploring the power of static site generation with Next.js App Router"
+	date="2025-10-16"
+	tags={["next-js", "react", "web-development"]}
+>
+	<h2>Why Static Sites?</h2>
+
+	<p>Static site generation offers several compelling advantages:</p>
+
+	<ol>
+		<li><strong>Performance</strong> Pre-rendered pages load instantly</li>
+		<li><strong>Security</strong>: No server-side code means reduced attack surface</li>
+		<li><strong>Cost</strong>: Simple hosting on CDNs or static hosts</li>
+		<li><strong>Reliability</strong>: No database or server to fail</li>
+	</ol>
+
+	<h2>Next.js Static Export</h2>
+
+	<p>With Next.js 14, you can export your entire application as static HTML:</p>
+
+	<pre><code>{`// next.config.mjs
+export default {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};`}</code></pre>
+
+	<h2>Force-Static Pages</h2>
+
+	<p>To ensure pages are truly static, use these exports:</p>
+
+	<pre><code>{`export const dynamic = 'error';
+export const revalidate = false;`}</code></pre>
+
+	<p>This tells Next.js to error if the page tries to use dynamic features.</p>
+
+	<h2>Dynamic Routes</h2>
+
+	<p>For dynamic routes like blog posts, implement <code>generateStaticParams</code>:</p>
+
+	<pre><code>{`export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}`}</code></pre>
+
+	<h2>Content Management</h2>
+
+	<p>I use a simple file-based approach:</p>
+
+	<ul>
+		<li>Posts in <code>content/posts/*.mdx</code></li>
+		<li>Frontmatter for metadata</li>
+		<li><code>gray-matter</code> for parsing</li>
+		<li>Zod for validation</li>
+	</ul>
+
+	<p>This keeps content close to code and version-controlled.</p>
+
+	<h2>The Result</h2>
+
+	<p>A blazingly fast, secure, and maintainable blog that costs nearly nothing to host.</p>
+
+	<h2>Next Steps</h2>
+
+	<p>Future enhancements might include:</p>
+
+	<ul>
+		<li><strong>Search</strong>: Client-side search with pre-built index</li>
+		<li><strong>Analytics</strong>: Privacy-focused tracking</li>
+		<li><strong>Comments</strong>: Static comments with GitHub Discussions</li>
+		<li><strong>Newsletter</strong>: Integration with email service</li>
+	</ul>
+
+	<p>But for now, keeping it simple is the goal.</p>
+</BlogPostLayout>

@@ -1,62 +1,71 @@
-# Astro Starter Kit: Blog
+# Stephen Jarmak - Personal Website
 
-```sh
-npm create astro@latest -- --template blog
-```
+A modern, static website built with Astro featuring a blog, project showcase, and clean design.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Features
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- ✅ Static site generation with Astro
+- ✅ Tailwind CSS for styling
+- ✅ SEO-friendly with meta tags and OpenGraph
+- ✅ RSS feed support
+- ✅ Sitemap generation
+- ✅ Fast, accessible, and maintainable
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
+```
+├── public/                 # Static assets
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
+│   ├── components/         # Reusable Astro components
+│   ├── layouts/            # Page layout components
+│   ├── pages/              # Route pages (*.astro)
+│   │   ├── blog/           # Blog pages
+│   │   │   ├── index.astro # Blog listing
+│   │   │   ├── welcome.astro
+│   │   │   └── building-with-nextjs.astro
+│   │   ├── index.astro     # Home page
+│   │   ├── about.astro     # About page
+│   │   ├── projects.astro  # Projects page
+│   │   ├── contact.astro   # Contact page
+│   │   └── rss.xml.js      # RSS feed
+│   └── consts.ts           # Site configuration
+├── astro.config.mjs        # Astro configuration
+├── render.yaml             # Render deployment config
 ├── package.json
 └── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
+Astro looks for `.astro` files in the `src/pages/` directory. Each file becomes a route based on its path.
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands are run from the root of the project:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command             | Action                                           |
+| :------------------ | :----------------------------------------------- |
+| `npm run dev`       | Starts local dev server at `localhost:4321`      |
+| `npm run build`     | Build your production site to `./dist/`          |
+| `npm run preview`   | Preview your build locally, before deploying     |
 
-## 👀 Want to learn more?
+## 🚀 Deployment
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This site is configured for deployment on Render.com:
 
-## Credit
+1. Connect your GitHub repository to Render
+2. Use the `render.yaml` configuration
+3. Set the build command to `npm run build`
+4. Set the publish directory to `./dist`
+5. Map the custom domain `sjarmak.ai`
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+## 📝 Adding Content
+
+- **Blog Posts**: Create new `.astro` files in `src/pages/blog/`
+- **Pages**: Add new `.astro` files in `src/pages/`
+- **Components**: Add reusable components in `src/components/`
+
+## 🏗️ Built With
+
+- **Framework**: Astro
+- **Styling**: Tailwind CSS
+- **Deployment**: Render (static hosting)
+- **Content**: Markdown with code syntax highlighting

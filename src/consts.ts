@@ -1,5 +1,11 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+export const siteConfig = {
+  name: "Stephanie Jarmak's Projects",
+  description: "Personal website and blog about information science and digital library projects",
+  author: {
+    name: "Stephanie Jarmak",
+    email: "sjarmak@sjarmak.ai"
+  }
+};
 
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_DESCRIPTION = siteConfig.description;
+export const SITE_TITLE = siteConfig.name;

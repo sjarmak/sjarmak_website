@@ -1,0 +1,50 @@
+---
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+---
+
+<BlogPostLayout
+	title="Welcome to My Blog"
+	description="An introduction to this blog and what you can expect from future posts"
+	date="2025-10-15"
+	tags={["meta", "introduction"]}
+>
+	<h2>Welcome!</h2>
+
+	<p>Thanks for visiting my blog. This is a space where I share my thoughts, experiences, and learnings as a software engineer.</p>
+
+	<h2>What You'll Find Here</h2>
+
+	<p>I write about:</p>
+
+	<ul>
+		<li><strong>Web Development</strong>: Modern frameworks, best practices, and lessons learned</li>
+		<li><strong>Software Engineering</strong>: Architecture, design patterns, and problem-solving</li>
+		<li><strong>Technology</strong>: Emerging trends and tools that catch my interest</li>
+		<li><strong>Personal Projects</strong>: Building in public and sharing the journey</li>
+	</ul>
+
+	<h2>A Bit About This Site</h2>
+
+	<p>This blog is built with:</p>
+
+	<pre><code>{`const stack = {
+  framework: "Astro",
+  styling: "Tailwind CSS",
+  content: "MDX",
+  deployment: "Render",
+};`}</code></pre>
+
+	<p>It's designed to be fast, accessible, and easy to maintain. Static generation ensures quick page loads, and the clean design keeps the focus on the content.</p>
+
+	<h2>Stay Connected</h2>
+
+	<p>If you'd like to follow along, you can:</p>
+
+	<ul>
+		<li>Subscribe via <a href="/rss.xml">RSS</a></li>
+		<li>Connect on <a href="https://github.com/sjarmak">GitHub</a></li>
+		<li>Reach out via the <a href="/contact">contact page</a></li>
+	</ul>
+
+	<p>Thanks for reading!</p>
+</BlogPostLayout>

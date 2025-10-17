@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const posts = [
+    {
+      id: '11',
+      title: 'List of LPI Abstracts with Broken Links',
+      content: 'I have added a new project (https://brokenlinks.sjarmak.ai) that lists LPI abstracts with broken links along with some searchable metadata to better inform users whether their content has been removed from LPI\'s websites.',
+      date: '2025-05-02',
+      author: 'sjarmak'
+    }
+  ];
+
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const title = post.title;
+const description = post.content.slice(0, 160);
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="container mx-auto px-4 py-8">
+    <article>
+      <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+      <p class="text-gray-600 text-sm mb-6">
+        Posted by {post.author} on <FormattedDate date={new Date(post.date)} />
+      </p>
+      <div class="prose max-w-none">
+        <p>{post.content}</p>
+      </div>
+    </article>
+
+    
+  </div>
+</BaseLayout>
